@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentines Airline</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style></style>
+:root {
+  --paper: #f8f6ef;
+  --ink: #1e1e1e;
+  --line: #d6d2c4;
+  --yellow: #f4c542;
+  --green: #4f7d4a;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: linear-gradient(135deg, #ffffff, #f3efe4);
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Scene */
+.scene {
+  perspective: 1400px;
+  width: 95%;
+  max-width: 750px;
+  margin: 40px 0;
+}
+
+/* Paper grain texture */
+.boarding-pass {
+  width: 100%;
+  min-height: 480px;
+  background: var(--paper);
+  border-radius: 18px;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 1s;
+  overflow: hidden;
+}
+
+.boarding-pass::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+/* Perforated edge */
+.boarding-pass::before {
+  content: "";
+  position: absolute;
+  right: -6px;
+  top: 0;
+  height: 100%;
+  width: 12px;
+  background:
+    radial-gradient(circle, transparent 4px, var(--paper) 4px);
+  background-size: 12px 20px;
+}
+
+/* Flip */
+.boarding-pass.flip {
+  transform: rotateY(180deg);
+}
+
+.side {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding: 2rem;
+  backface-visibility: hidden;
+}
+
+.back {
+  transform: rotateY(180deg);
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  letter-spacing: 1px;
+  font-size: 0.9rem;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+/* Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+.label {
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  color: #777;
+}
+
+.value {
+  font-weight: 600;
+}
+
+/* Destination */
+.destination-box {
+  border: 1px solid var(--line);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+}
+
+.destination-title {
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  color: #777;
+}
+
+.destination-main {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  margin-top: 0.3rem;
+}
+
+.sub-destination {
+  font-size: 0.8rem;
+  margin-top: 0.3rem;
+  color: var(--green);
+}
+
+/* Question */
+.question {
+  text-align: center;
+  margin: 1.5rem 0;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+}
+
+/* Button */
+button {
+  display: block;
+  margin: 0 auto;
+  padding: 0.8rem 2.5rem;
+  border: none;
+  border-radius: 40px;
+  background: var(--yellow);
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 15px 35px rgba(244,197,66,0.4);
+}
+
+/* Barcode */
+.barcode {
+  margin-top: 1.5rem;
+  height: 40px;
+  position: relative;
+  background: repeating-linear-gradient(
+    90deg,
+    #000,
+    #000 3px,
+    transparent 3px,
+    transparent 6px
+  );
+  opacity: 0.5;
+  overflow: hidden;
+}
+
+/* Scanning animation */
+.barcode::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  height: 100%;
+  width: 50%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,0,0.4),
+    transparent
+  );
+  transition: left 1s;
+}
+
+.barcode:hover::after {
+  left: 150%;
+}
+
+/* Countdown */
+.countdown {
+  font-size: 0.8rem;
+  margin-top: 0.8rem;
+  color: var(--green);
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="scene">
+  <div class="boarding-pass" id="card">
+
+    <!-- FRONT -->
+    <div class="side front">
+
+      <div class="header">
+        <div>✈ VALENTINES AIRLINE</div>
+        <div>BOARDING PASS</div>
+      </div>
+
+      <div class="destination-box">
+        <div class="destination-title">DESTINATION</div>
+        <div class="destination-main">Dinner for two 🌻</div>
+        <div class="sub-destination">
+          City Code: DNJP &nbsp; • &nbsp; Terminal: A15
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="section">
+          <div class="label">PASSENGER</div>
+          <div class="value">Dia Nguyen</div>
+        </div>
+        <div class="section">
+          <div class="label">SEAT</div>
+          <div class="value">2A</div>
+        </div>
+        <div class="section">
+          <div class="label">FLIGHT</div>
+          <div class="value">VA0214</div>
+        </div>
+        <div class="section">
+          <div class="label">BOARDING</div>
+          <div class="value">6:00 PM</div>
+        </div>
+      </div>
+
+      <div class="question">
+        Hi Wifey, Will you be my Valentine?
+      </div>
+
+      <button onclick="flipCard()">BOARD NOW</button>
+      <div class="countdown" id="countdown"></div>
+
+      <div class="barcode"></div>
+
+    </div>
+
+    <!-- BACK -->
+    <div class="side back">
+
+      <div class="header">
+        <div>✈ VALENTINES AIRLINE</div>
+        <div>CONFIRMED</div>
+      </div>
+
+      <div class="confirm-title">Booking Successful 🤍</div>
+
+      <div class="confirm-details">
+        <p>Destination: Dinner Date 🌻</p>
+        <p>Time: 6:00 PM This Saturday</p>
+        <p>Dress Code: Let's look sexy ;)</p>
+      </div>
+
+      <div class="signature">
+        — Jasmine Pok
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<script>
+function flipCard() {
+  document.getElementById("card").classList.add("flip");
+}
+
+// Countdown to Saturday 6pm
+const countdownElement = document.getElementById("countdown");
+const targetDate = new Date();
+targetDate.setHours(18,0,0,0);
+
+// If today is past Saturday, adjust accordingly
+while (targetDate < new Date()) {
+  targetDate.setDate(targetDate.getDate() + 1);
+}
+
+function updateCountdown() {
+  const now = new Date();
+  const diff = targetDate - now;
+
+  const hours = Math.floor(diff / (1000 * 60 * 60));
+  const minutes = Math.floor((diff / (1000 * 60)) % 60);
+
+  countdownElement.innerHTML =
+    "Gate opens in: " + hours + "h " + minutes + "m";
+}
+
+setInterval(updateCountdown, 60000);
+updateCountdown();
+
+</script>
+
+</body>
+</html>
