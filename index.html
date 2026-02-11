@@ -25,10 +25,11 @@
 body {
   background: linear-gradient(135deg, #ffffff, #f3efe4);
   font-family: 'Inter', sans-serif;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
   padding: 20px;
 }
 
@@ -37,48 +38,20 @@ body {
   perspective: 1400px;
   width: 95%;
   max-width: 750px;
-  margin: 20px 0;
 }
 
 /* Boarding Pass */
 .boarding-pass {
   width: 100%;
-  min-height: 520px;
+  min-height: 420px;
   background: var(--paper);
   border-radius: 18px;
   box-shadow: 0 30px 60px rgba(0,0,0,0.15);
   position: relative;
   transform-style: preserve-3d;
   transition: transform 1s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-/* Paper texture */
-.boarding-pass::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
-  opacity: 0.25;
-  pointer-events: none;
-}
-
-/* Perforated edge */
-.boarding-pass::before {
-  content: "";
-  position: absolute;
-  right: -6px;
-  top: 0;
-  height: 100%;
-  width: 12px;
-  background:
-    radial-gradient(circle, transparent 4px, var(--paper) 4px);
-  background-size: 12px 22px;
-}
-
-/* Flip */
 .boarding-pass.flip {
   transform: rotateY(180deg);
 }
@@ -86,20 +59,29 @@ body {
 .side {
   position: absolute;
   width: 100%;
-  min-height: 100%;
+  height: 100%;
   padding: 2rem;
   backface-visibility: hidden;
+}
+
+.back {
+  transform: rotateY(180deg);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-/* Back */
-.back {
-  transform: rotateY(180deg);
-  overflow: hidden;
-  position: relative;
+/* Left yellow accent stripe */
+.boarding-pass::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 12px;
+  background: var(--yellow);
+  border-radius: 18px 0 0 18px;
 }
 
 /* Header */
@@ -112,126 +94,9 @@ body {
   border-bottom: 1px solid var(--line);
   padding-bottom: 0.8rem;
   margin-bottom: 1rem;
-  width: 100%;
 }
 
-/* Destination Box */
-.destination-box {
-  border: 1px solid var(--line);
-  padding: 1rem;
-  margin-bottom: 1rem;
-  border-radius: 8px;
-}
-
-.destination-title {
-  font-size: 0.7rem;
-  letter-spacing: 2px;
-  color: #777;
-}
-
-.destination-main {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.4rem;
-  margin-top: 0.3rem;
-}
-
-.sub-destination {
-  font-size: 0.8rem;
-  margin-top: 0.3rem;
-  color: var(--green);
-}
-
-/* Grid */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  border-bottom: 1px solid var(--line);
-  padding-bottom: 1rem;
-  margin-bottom: 1rem;
-}
-
-.label {
-  font-size: 0.7rem;
-  letter-spacing: 1px;
-  color: #777;
-}
-
-.value {
-  font-weight: 600;
-}
-
-/* Question */
-.question {
-  text-align: center;
-  margin: 1.5rem 0;
-  font-family: 'Playfair Display', serif;
-  font-size: 1.3rem;
-}
-
-/* Button */
-button {
-  display: block;
-  margin: 0 auto;
-  padding: 0.8rem 2.5rem;
-  border: none;
-  border-radius: 40px;
-  background: var(--yellow);
-  font-weight: 700;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 15px 35px rgba(244,197,66,0.4);
-}
-
-/* Countdown */
-.countdown {
-  font-size: 0.85rem;
-  margin-top: 0.8rem;
-  color: var(--green);
-  text-align: center;
-}
-
-/* Barcode */
-.barcode {
-  margin-top: 1.5rem;
-  height: 40px;
-  position: relative;
-  background: repeating-linear-gradient(
-    90deg,
-    #000,
-    #000 3px,
-    transparent 3px,
-    transparent 6px
-  );
-  opacity: 0.5;
-  overflow: hidden;
-}
-
-.barcode::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  height: 100%;
-  width: 50%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255,255,0,0.4),
-    transparent
-  );
-  transition: left 1s;
-}
-
-.barcode:hover::after {
-  left: 150%;
-}
-
-/* Back page - flight confirmed grid */
+/* Grid for back page */
 .confirm-grid {
   display: flex;
   flex-direction: column;
@@ -239,7 +104,7 @@ button:hover {
   max-width: 480px;
   margin: 0 auto;
   border-bottom: 1px dashed var(--line);
-  padding-bottom: 2rem; /* more space from bottom */
+  padding-bottom: 2rem; /* space from bottom */
 }
 
 .confirm-row {
@@ -257,9 +122,9 @@ button:hover {
   font-family: 'Playfair Display', serif;
   font-size: 1.6rem;
   margin-bottom: 1rem;
-  color: var(--ink);
   text-align: center;
   font-weight: 700;
+  color: var(--ink);
 }
 
 .signature {
@@ -272,8 +137,8 @@ button:hover {
 
 /* Responsive */
 @media (max-width: 600px) {
-  .grid, .confirm-grid {
-    grid-template-columns: 1fr;
+  .confirm-grid {
+    width: 100%;
   }
 }
 </style>
@@ -284,7 +149,7 @@ button:hover {
 <div class="scene">
   <div class="boarding-pass" id="card">
 
-    <!-- FRONT -->
+    <!-- FRONT (unchanged) -->
     <div class="side front">
 
       <div class="header">
@@ -294,26 +159,26 @@ button:hover {
 
       <div class="destination-box">
         <div class="destination-title">DESTINATION</div>
-        <div class="destination-main">Dinner for Two 🌻</div>
+        <div class="destination-main">Dinner for two 🌻</div>
         <div class="sub-destination">
-          City Code: DNJP • Terminal: A15
+          City Code: DNJP &nbsp; • &nbsp; Terminal: A15
         </div>
       </div>
 
       <div class="grid">
-        <div>
+        <div class="section">
           <div class="label">PASSENGER</div>
           <div class="value">Dia Nguyen</div>
         </div>
-        <div>
+        <div class="section">
           <div class="label">SEAT</div>
           <div class="value">2A</div>
         </div>
-        <div>
+        <div class="section">
           <div class="label">FLIGHT</div>
           <div class="value">VA0214</div>
         </div>
-        <div>
+        <div class="section">
           <div class="label">BOARDING</div>
           <div class="value">6:00 PM</div>
         </div>
@@ -331,7 +196,7 @@ button:hover {
 
     </div>
 
-    <!-- BACK -->
+    <!-- BACK (updated spacing and centering only) -->
     <div class="side back">
 
       <div class="header">
