@@ -7,7 +7,7 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-<style></style>
+<style>
 :root {
   --paper: #f8f6ef;
   --ink: #1e1e1e;
@@ -39,10 +39,10 @@ body {
   margin: 40px 0;
 }
 
-/* Paper grain texture */
+/* Boarding Pass */
 .boarding-pass {
   width: 100%;
-  min-height: 480px;
+  min-height: 520px;
   background: var(--paper);
   border-radius: 18px;
   box-shadow: 0 30px 60px rgba(0,0,0,0.15);
@@ -52,6 +52,7 @@ body {
   overflow: hidden;
 }
 
+/* Paper grain */
 .boarding-pass::after {
   content: "";
   position: absolute;
@@ -71,7 +72,7 @@ body {
   width: 12px;
   background:
     radial-gradient(circle, transparent 4px, var(--paper) 4px);
-  background-size: 12px 20px;
+  background-size: 12px 22px;
 }
 
 /* Flip */
@@ -103,27 +104,7 @@ body {
   margin-bottom: 1rem;
 }
 
-/* Grid */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  border-bottom: 1px solid var(--line);
-  padding-bottom: 1rem;
-  margin-bottom: 1rem;
-}
-
-.label {
-  font-size: 0.7rem;
-  letter-spacing: 1px;
-  color: #777;
-}
-
-.value {
-  font-weight: 600;
-}
-
-/* Destination */
+/* Destination Box */
 .destination-box {
   border: 1px solid var(--line);
   padding: 1rem;
@@ -147,6 +128,26 @@ body {
   font-size: 0.8rem;
   margin-top: 0.3rem;
   color: var(--green);
+}
+
+/* Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+.label {
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  color: #777;
+}
+
+.value {
+  font-weight: 600;
 }
 
 /* Question */
@@ -175,6 +176,14 @@ button:hover {
   box-shadow: 0 15px 35px rgba(244,197,66,0.4);
 }
 
+/* Countdown */
+.countdown {
+  font-size: 0.85rem;
+  margin-top: 0.8rem;
+  color: var(--green);
+  text-align: center;
+}
+
 /* Barcode */
 .barcode {
   margin-top: 1.5rem;
@@ -191,7 +200,7 @@ button:hover {
   overflow: hidden;
 }
 
-/* Scanning animation */
+/* Animated scan */
 .barcode::after {
   content: "";
   position: absolute;
@@ -212,12 +221,24 @@ button:hover {
   left: 150%;
 }
 
-/* Countdown */
-.countdown {
-  font-size: 0.8rem;
-  margin-top: 0.8rem;
-  color: var(--green);
-  text-align: center;
+/* Back side */
+.confirm-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+}
+
+.confirm-details p {
+  margin-bottom: 0.6rem;
+  font-weight: 500;
+}
+
+.signature {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 2rem;
+  font-size: 0.9rem;
+  opacity: 0.7;
 }
 
 /* Responsive */
@@ -226,7 +247,6 @@ button:hover {
     grid-template-columns: 1fr;
   }
 }
-
 </style>
 </head>
 
@@ -245,26 +265,26 @@ button:hover {
 
       <div class="destination-box">
         <div class="destination-title">DESTINATION</div>
-        <div class="destination-main">Dinner for two 🌻</div>
+        <div class="destination-main">Dinner for Two 🌻</div>
         <div class="sub-destination">
-          City Code: DNJP &nbsp; • &nbsp; Terminal: A15
+          City Code: DNJP • Terminal: A15
         </div>
       </div>
 
       <div class="grid">
-        <div class="section">
+        <div>
           <div class="label">PASSENGER</div>
           <div class="value">Dia Nguyen</div>
         </div>
-        <div class="section">
+        <div>
           <div class="label">SEAT</div>
           <div class="value">2A</div>
         </div>
-        <div class="section">
+        <div>
           <div class="label">FLIGHT</div>
           <div class="value">VA0214</div>
         </div>
-        <div class="section">
+        <div>
           <div class="label">BOARDING</div>
           <div class="value">6:00 PM</div>
         </div>
@@ -275,6 +295,7 @@ button:hover {
       </div>
 
       <button onclick="flipCard()">BOARD NOW</button>
+
       <div class="countdown" id="countdown"></div>
 
       <div class="barcode"></div>
@@ -311,13 +332,12 @@ function flipCard() {
   document.getElementById("card").classList.add("flip");
 }
 
-// Countdown to Saturday 6pm
+// Countdown to next 6PM
 const countdownElement = document.getElementById("countdown");
 const targetDate = new Date();
 targetDate.setHours(18,0,0,0);
 
-// If today is past Saturday, adjust accordingly
-while (targetDate < new Date()) {
+if (targetDate < new Date()) {
   targetDate.setDate(targetDate.getDate() + 1);
 }
 
@@ -334,7 +354,6 @@ function updateCountdown() {
 
 setInterval(updateCountdown, 60000);
 updateCountdown();
-
 </script>
 
 </body>
