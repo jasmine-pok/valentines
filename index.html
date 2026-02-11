@@ -96,7 +96,106 @@ body {
   margin-bottom: 1rem;
 }
 
-/* Grid for back page */
+/* Front page sections remain unchanged */
+.destination-box {
+  border: 1px solid var(--line);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+}
+
+.destination-title {
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  color: #777;
+}
+
+.destination-main {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  margin-top: 0.3rem;
+}
+
+.sub-destination {
+  font-size: 0.8rem;
+  margin-top: 0.3rem;
+  color: var(--green);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+.label {
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  color: #777;
+}
+
+.value {
+  font-weight: 600;
+}
+
+.question {
+  text-align: center;
+  margin: 1.5rem 0;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+}
+
+button {
+  display: block;
+  margin: 0 auto;
+  padding: 0.8rem 2.5rem;
+  border: none;
+  border-radius: 40px;
+  background: var(--yellow);
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 15px 35px rgba(244,197,66,0.4);
+}
+
+.barcode {
+  margin-top: 1.5rem;
+  height: 40px;
+  background: repeating-linear-gradient(
+    90deg,
+    #000,
+    #000 3px,
+    transparent 3px,
+    transparent 6px
+  );
+  opacity: 0.5;
+}
+
+/* Countdown */
+.countdown {
+  font-size: 0.85rem;
+  margin-top: 0.8rem;
+  color: var(--green);
+  text-align: center;
+}
+
+/* Back page updated layout */
+.confirm-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-weight: 700;
+  color: var(--ink);
+}
+
 .confirm-grid {
   display: flex;
   flex-direction: column;
@@ -104,7 +203,7 @@ body {
   max-width: 480px;
   margin: 0 auto;
   border-bottom: 1px dashed var(--line);
-  padding-bottom: 2rem; /* space from bottom */
+  padding-bottom: 2.5rem; /* lifted for signature */
 }
 
 .confirm-row {
@@ -118,27 +217,18 @@ body {
   border-top: none;
 }
 
-.confirm-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.6rem;
-  margin-bottom: 1rem;
-  text-align: center;
-  font-weight: 700;
-  color: var(--ink);
-}
-
 .signature {
   font-size: 0.9rem;
   opacity: 0.7;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   text-align: right;
   width: 100%;
 }
 
 /* Responsive */
 @media (max-width: 600px) {
-  .confirm-grid {
-    width: 100%;
+  .grid, .confirm-grid {
+    grid-template-columns: 1fr;
   }
 }
 </style>
@@ -196,7 +286,7 @@ body {
 
     </div>
 
-    <!-- BACK (updated spacing and centering only) -->
+    <!-- BACK (only spacing/centering fixed) -->
     <div class="side back">
 
       <div class="header">
