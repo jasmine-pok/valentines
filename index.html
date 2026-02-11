@@ -232,21 +232,23 @@ button:hover {
   left: 150%;
 }
 
-/* Back side - flight confirmed box */
-.confirm-box {
-  background: rgba(255,248,220,0.95);
-  border-radius: 16px;
-  padding: 2rem;
-  width: 90%;
+/* Back page - flight confirmed grid */
+.confirm-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  border-bottom: 1px dashed var(--line);
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  width: 100%;
   max-width: 500px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-  text-align: left;
-  border-top: 4px solid var(--yellow);
-  border-bottom: 4px solid var(--green);
-  margin-bottom: 2rem;
 }
 
-/* Title */
+.confirm-grid div {
+  display: flex;
+  justify-content: space-between;
+}
+
 .confirm-title {
   font-family: 'Playfair Display', serif;
   font-size: 1.6rem;
@@ -256,18 +258,6 @@ button:hover {
   font-weight: 700;
 }
 
-/* Details */
-.confirm-details {
-  font-size: 1rem;
-  line-height: 1.6;
-  color: var(--ink);
-}
-
-.confirm-details p {
-  margin-bottom: 0.6rem;
-}
-
-/* Signature */
 .signature {
   position: absolute;
   bottom: 1.5rem;
@@ -278,7 +268,7 @@ button:hover {
 
 /* Responsive */
 @media (max-width: 600px) {
-  .grid {
+  .grid, .confirm-grid {
     grid-template-columns: 1fr;
   }
 }
@@ -345,16 +335,14 @@ button:hover {
         <div>CONFIRMED</div>
       </div>
 
-      <div class="confirm-box">
-        <div class="confirm-title">Flight Confirmed</div>
+      <div class="confirm-title">Flight Confirmed</div>
 
-        <div class="confirm-details">
-          <p>Passengers: Dia Nguyen + Jasmine Pok</p>
-          <p>Destination: Dinner Date 🌻</p>
-          <p>Departure: 6:00 PM This Saturday 02/14/2026</p>
-          <p>Dress Code: Sexy</p>
-          <p>Looking forward to welcoming you aboard ;)</p>
-        </div>
+      <div class="confirm-grid">
+        <div><span>Passengers:</span><span>Dia Nguyen + Jasmine Pok</span></div>
+        <div><span>Destination:</span><span>Dinner Date 🌻</span></div>
+        <div><span>Departure:</span><span>6:00 PM This Saturday 02/14/2026</span></div>
+        <div><span>Dress Code:</span><span>Sexy</span></div>
+        <div><span>Gate opens in:</span><span id="gateCountdown"></span></div>
       </div>
 
       <div class="signature">
@@ -373,16 +361,17 @@ function flipCard() {
 
 // Countdown to next 6PM
 const countdownElement = document.getElementById("countdown");
-const targetDate = new Date();
-targetDate.setHours(18,0,0,0);
-if (targetDate < new Date()) targetDate.setDate(targetDate.getDate() + 1);
-
+const gateElement = document.getElementById("gateCountdown");
 function updateCountdown() {
   const now = new Date();
+  let targetDate = new Date();
+  targetDate.setHours(18,0,0,0);
+  if (targetDate < now) targetDate.setDate(targetDate.getDate() + 1);
   const diff = targetDate - now;
   const hours = Math.floor(diff / (1000 * 60 * 60));
   const minutes = Math.floor((diff / (1000 * 60)) % 60);
   countdownElement.innerHTML = "Gate opens in: " + hours + "h " + minutes + "m";
+  gateElement.innerHTML = hours + "h " + minutes + "m";
 }
 setInterval(updateCountdown, 60000);
 updateCountdown();
