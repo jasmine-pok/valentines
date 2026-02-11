@@ -14,6 +14,7 @@
   --line: #d6d2c4;
   --yellow: #f4c542;
   --green: #4f7d4a;
+  --red: #ff4d6d;
 }
 
 * {
@@ -30,6 +31,8 @@ body {
   align-items: center;
   justify-content: center;
   padding: 20px;
+  overflow-x: hidden;
+  position: relative;
 }
 
 /* Scene */
@@ -91,6 +94,8 @@ body {
 /* Back */
 .back {
   transform: rotateY(180deg);
+  overflow: hidden;
+  position: relative;
 }
 
 /* Header */
@@ -222,11 +227,21 @@ button:hover {
   left: 150%;
 }
 
-/* Back side */
+/* Back side details */
 .confirm-title {
   font-family: 'Playfair Display', serif;
   font-size: 1.6rem;
   margin-bottom: 1rem;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.confirm-details {
+  font-size: 1rem;
+  text-align: center;
+  position: relative;
+  z-index: 2;
 }
 
 .confirm-details p {
@@ -234,12 +249,64 @@ button:hover {
   font-weight: 500;
 }
 
+/* Signature */
 .signature {
   position: absolute;
   bottom: 1.5rem;
   right: 2rem;
   font-size: 0.9rem;
   opacity: 0.7;
+  z-index: 2;
+}
+
+/* Heart Stamp */
+.stamp {
+  position: absolute;
+  top: 1rem;
+  right: 2rem;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 4px solid var(--red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  color: var(--red);
+  opacity: 0;
+  transform: scale(0);
+  z-index: 2;
+}
+
+/* Confetti */
+.confetti-piece {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background-color: var(--red);
+  opacity: 0.8;
+  transform: rotate(45deg);
+  animation: confetti-fall 2s linear forwards;
+}
+
+@keyframes confetti-fall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(200px) rotate(360deg); opacity: 0; }
+}
+
+/* Floating hearts behind */
+.floating-heart {
+  position: absolute;
+  font-size: 16px;
+  opacity: 0.3;
+  animation: float-heart 4s linear infinite;
+}
+
+@keyframes float-heart {
+  0% { transform: translateY(0) translateX(0) scale(1); opacity: 0.3; }
+  50% { transform: translateY(-50px) translateX(10px) scale(1.2); opacity: 0.5; }
+  100% { transform: translateY(-100px) translateX(0) scale(1); opacity: 0; }
 }
 
 /* Responsive */
@@ -306,6 +373,14 @@ button:hover {
     <!-- BACK -->
     <div class="side back">
 
+      <div class="floating-heart" style="left:10%; animation-delay:0s;">❤️</div>
+      <div class="floating-heart" style="left:30%; animation-delay:1s;">❤️</div>
+      <div class="floating-heart" style="left:50%; animation-delay:2s;">❤️</div>
+      <div class="floating-heart" style="left:70%; animation-delay:0.5s;">❤️</div>
+      <div class="floating-heart" style="left:90%; animation-delay:1.5s;">❤️</div>
+
+      <div class="stamp" id="stamp">Booked ❤️</div>
+
       <div class="header">
         <div>✈ VALENTINES AIRLINE</div>
         <div>CONFIRMED</div>
@@ -330,29 +405,41 @@ button:hover {
 
 <script>
 function flipCard() {
-  document.getElementById("card").classList.add("flip");
+  const card = document.getElementById("card");
+  card.classList.add("flip");
+
+  // Show stamp
+  const stamp = document.getElementById("stamp");
+  stamp.style.opacity = 1;
+  stamp.style.transform = "scale(1)";
+
+  // Confetti burst
+  for (let i = 0; i < 20; i++) {
+    const confetti = document.createElement("div");
+    confetti.classList.add("confetti-piece");
+    confetti.style.left = Math.random() * 90 + "%";
+    confetti.style.top = "-10px";
+    confetti.style.backgroundColor = ["#ff4d6d","#f4c542","#4f7d4a"][Math.floor(Math.random()*3)];
+    confetti.style.animationDuration = 1 + Math.random() * 1 + "s";
+    document.querySelector(".back").appendChild(confetti);
+
+    setTimeout(() => confetti.remove(), 2000);
+  }
 }
 
 // Countdown to next 6PM
 const countdownElement = document.getElementById("countdown");
 const targetDate = new Date();
 targetDate.setHours(18,0,0,0);
-
-if (targetDate < new Date()) {
-  targetDate.setDate(targetDate.getDate() + 1);
-}
+if (targetDate < new Date()) targetDate.setDate(targetDate.getDate() + 1);
 
 function updateCountdown() {
   const now = new Date();
   const diff = targetDate - now;
-
   const hours = Math.floor(diff / (1000 * 60 * 60));
   const minutes = Math.floor((diff / (1000 * 60)) % 60);
-
-  countdownElement.innerHTML =
-    "Gate opens in: " + hours + "h " + minutes + "m";
+  countdownElement.innerHTML = "Gate opens in: " + hours + "h " + minutes + "m";
 }
-
 setInterval(updateCountdown, 60000);
 updateCountdown();
 </script>
