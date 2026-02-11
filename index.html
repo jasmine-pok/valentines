@@ -249,7 +249,7 @@ button:hover {
 
       <div class="destination-box">
         <div class="destination-title">DESTINATION</div>
-        <div class="destination-main">Dinner for two 🌻</div>
+        <div class="destination-main">Dinner for two </div>
         <div class="sub-destination">
           City Code: DNJP &nbsp; • &nbsp; Terminal: A15
         </div>
@@ -275,7 +275,7 @@ button:hover {
       </div>
 
       <div class="question">
-        Hi Wifey, Will you be my Valentine?
+        Hi Wifey, Will you be my Valentine? 🌻
       </div>
 
       <button onclick="flipCard()">BOOK NOW</button>
@@ -295,8 +295,8 @@ button:hover {
 
       <div class="confirm-grid">
         <div class="confirm-row"><span>Passengers:</span><span>Dia Nguyen + Jasmine Pok</span></div>
-        <div class="confirm-row"><span>Destination:</span><span>Dinner Date 🌻</span></div>
-        <div class="confirm-row"><span>Departure:</span><span>6:00 PM Saturday 02/14/2026</span></div>
+        <div class="confirm-row"><span>Destination:</span><span>Palmetto Osteria</span></div>
+        <div class="confirm-row"><span>Departure:</span><span>6:30 PM Saturday 02/14/2026</span></div>
         <div class="confirm-row"><span>Dress Code:</span><span>Sexy</span></div>
         <div class="confirm-row"><span>Gate opens in:</span><span id="gateCountdown"></span></div>
         <div class="confirm-row"><span>Looking forward to welcoming you aboard ;)</span></div>
@@ -315,23 +315,37 @@ function flipCard() {
   document.getElementById("card").classList.add("flip");
 }
 
-// Countdown to next 6PM
+// 🔒 Fixed Target Date: Feb 14, 2026 at 6:00 PM
+const targetDate = new Date("February 14, 2026 18:00:00").getTime();
+
 const countdownElement = document.getElementById("countdown");
 const gateElement = document.getElementById("gateCountdown");
+
 function updateCountdown() {
-  const now = new Date();
-  let targetDate = new Date();
-  targetDate.setHours(18,0,0,0);
-  if (targetDate < now) targetDate.setDate(targetDate.getDate() + 1);
+  const now = new Date().getTime();
   const diff = targetDate - now;
-  const hours = Math.floor(diff / (1000 * 60 * 60));
+
+  if (diff <= 0) {
+    countdownElement.innerHTML = "Boarding in progress ✈";
+    gateElement.innerHTML = "Now Boarding";
+    return;
+  }
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
   const minutes = Math.floor((diff / (1000 * 60)) % 60);
-  countdownElement.innerHTML = "Gate opens in: " + hours + "h " + minutes + "m";
-  gateElement.innerHTML = hours + "h " + minutes + "m";
+
+  const display = days + "d " + hours + "h " + minutes + "m";
+
+  countdownElement.innerHTML = "Gate opens in: " + display;
+  gateElement.innerHTML = display;
 }
+
+// Update every minute
 setInterval(updateCountdown, 60000);
 updateCountdown();
 </script>
+
 
 </body>
 </html>
