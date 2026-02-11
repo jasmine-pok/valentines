@@ -52,7 +52,7 @@ body {
   transition: transform 1s;
 }
 
-/* Paper grain texture */
+/* Paper texture */
 .boarding-pass::after {
   content: "";
   position: absolute;
@@ -91,6 +91,16 @@ body {
 /* Back */
 .back {
   transform: rotateY(180deg);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: var(--paper);
+  border-radius: 18px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
 }
 
 /* Header */
@@ -103,6 +113,7 @@ body {
   border-bottom: 1px solid var(--line);
   padding-bottom: 0.8rem;
   margin-bottom: 1rem;
+  width: 100%;
 }
 
 /* Destination Box */
@@ -201,7 +212,6 @@ button:hover {
   overflow: hidden;
 }
 
-/* Scanning animation */
 .barcode::after {
   content: "";
   position: absolute;
@@ -222,18 +232,42 @@ button:hover {
   left: 150%;
 }
 
-/* Back side */
+/* Back side - flight confirmed box */
+.confirm-box {
+  background: rgba(255,248,220,0.95);
+  border-radius: 16px;
+  padding: 2rem;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  text-align: left;
+  border-top: 4px solid var(--yellow);
+  border-bottom: 4px solid var(--green);
+  margin-bottom: 2rem;
+}
+
+/* Title */
 .confirm-title {
   font-family: 'Playfair Display', serif;
   font-size: 1.6rem;
   margin-bottom: 1rem;
+  color: var(--ink);
+  text-align: center;
+  font-weight: 700;
+}
+
+/* Details */
+.confirm-details {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ink);
 }
 
 .confirm-details p {
   margin-bottom: 0.6rem;
-  font-weight: 500;
 }
 
+/* Signature */
 .signature {
   position: absolute;
   bottom: 1.5rem;
@@ -295,7 +329,7 @@ button:hover {
         Hi Wifey, Will you be my Valentine?
       </div>
 
-      <button onclick="flipCard()">BOARD NOW</button>
+      <button onclick="flipCard()">BOOK NOW</button>
 
       <div class="countdown" id="countdown"></div>
 
@@ -311,14 +345,16 @@ button:hover {
         <div>CONFIRMED</div>
       </div>
 
-      <div class="confirm-title">✈ Flight Confirmed </div>
+      <div class="confirm-box">
+        <div class="confirm-title">Flight Confirmed</div>
 
-      <div class="confirm-details">
-        <p>Passengers: Dia Nguyen + Jasmine Pok</p>
-        <p>Destination: Dinner Date 🌻</p>
-        <p>Departure: 6:00 PM This Saturday 02/14/2026</p>
-        <p>Dress Code: Sexy</p>
-        <p>Looking forward to welcoming you aboard ;)</p>
+        <div class="confirm-details">
+          <p>Passengers: Dia Nguyen + Jasmine Pok</p>
+          <p>Destination: Dinner Date 🌻</p>
+          <p>Departure: 6:00 PM This Saturday 02/14/2026</p>
+          <p>Dress Code: Sexy</p>
+          <p>Looking forward to welcoming you aboard ;)</p>
+        </div>
       </div>
 
       <div class="signature">
@@ -339,22 +375,15 @@ function flipCard() {
 const countdownElement = document.getElementById("countdown");
 const targetDate = new Date();
 targetDate.setHours(18,0,0,0);
-
-if (targetDate < new Date()) {
-  targetDate.setDate(targetDate.getDate() + 1);
-}
+if (targetDate < new Date()) targetDate.setDate(targetDate.getDate() + 1);
 
 function updateCountdown() {
   const now = new Date();
   const diff = targetDate - now;
-
   const hours = Math.floor(diff / (1000 * 60 * 60));
   const minutes = Math.floor((diff / (1000 * 60)) % 60);
-
-  countdownElement.innerHTML =
-    "Gate opens in: " + hours + "h " + minutes + "m";
+  countdownElement.innerHTML = "Gate opens in: " + hours + "h " + minutes + "m";
 }
-
 setInterval(updateCountdown, 60000);
 updateCountdown();
 </script>
