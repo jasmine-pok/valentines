@@ -62,14 +62,14 @@ body {
   height: 100%;
   padding: 2rem;
   backface-visibility: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between; /* ensures barcode stays at bottom */
 }
 
 .back {
   transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 /* Left yellow accent stripe */
@@ -96,7 +96,7 @@ body {
   margin-bottom: 1rem;
 }
 
-/* Front page sections */
+/* Front page sections remain unchanged */
 .destination-box {
   border: 1px solid var(--line);
   padding: 1rem;
@@ -165,8 +165,8 @@ button:hover {
   box-shadow: 0 15px 35px rgba(244,197,66,0.4);
 }
 
-/* Barcode */
 .barcode {
+  margin-top: 1.5rem;
   height: 40px;
   background: repeating-linear-gradient(
     90deg,
@@ -176,8 +176,6 @@ button:hover {
     transparent 6px
   );
   opacity: 0.5;
-  margin-top: 1rem;
-  border-radius: 2px;
 }
 
 /* Countdown */
@@ -188,7 +186,7 @@ button:hover {
   text-align: center;
 }
 
-/* Back page layout */
+/* Back page updated layout */
 .confirm-title {
   font-family: 'Playfair Display', serif;
   font-size: 1.6rem;
@@ -205,7 +203,7 @@ button:hover {
   max-width: 480px;
   margin: 0 auto;
   border-bottom: 1px dashed var(--line);
-  padding-bottom: 2rem;
+  padding-bottom: 2.5rem; /* lifted for signature */
 }
 
 .confirm-row {
@@ -284,16 +282,13 @@ button:hover {
 
       <div class="countdown" id="countdown"></div>
 
-      <div class="barcode"></div>
-
     </div>
 
-    <!-- BACK -->
+    <!-- BACK (only spacing/centering fixed) -->
     <div class="side back">
 
       <div class="header">
-        <div>✈ VALENTINES AIRLINE</div>
-        <div>CONFIRMED</div>
+        <div>✈ VALENTINES AIRLINE CONFIRMED</div>
       </div>
 
       <div class="confirm-title">Flight Confirmed</div>
@@ -305,8 +300,6 @@ button:hover {
         <div class="confirm-row"><span>Dress Code:</span><span>Sexy</span></div>
         <div class="confirm-row"><span>Gate opens in:</span><span id="gateCountdown"></span></div>
       </div>
-
-      <div class="barcode"></div>
 
       <div class="signature">
         — Jasmine Pok
