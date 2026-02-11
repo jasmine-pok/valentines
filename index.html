@@ -234,19 +234,24 @@ button:hover {
 
 /* Back page - flight confirmed grid */
 .confirm-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
   border-bottom: 1px dashed var(--line);
   padding-bottom: 1rem;
-  margin-bottom: 1rem;
-  width: 100%;
-  max-width: 500px;
 }
 
-.confirm-grid div {
+.confirm-row {
   display: flex;
   justify-content: space-between;
+  padding: 0.5rem 0;
+  border-top: 1px dashed var(--line);
+}
+
+.confirm-row:first-child {
+  border-top: none;
 }
 
 .confirm-title {
@@ -327,29 +332,30 @@ button:hover {
 
     </div>
 
-    <!-- BACK -->
-    <div class="side back">
+<!-- BACK -->
+<div class="side back">
 
-      <div class="header">
-        <div>✈ VALENTINES AIRLINE</div>
-        <div>CONFIRMED</div>
-      </div>
+  <div class="header">
+    <div>✈ VALENTINES AIRLINE</div>
+    <div>CONFIRMED</div>
+  </div>
 
-      <div class="confirm-title">Flight Confirmed</div>
+  <div class="confirm-title">Flight Confirmed</div>
 
-      <div class="confirm-grid">
-        <div><span>Passengers:</span><span>Dia Nguyen + Jasmine Pok</span></div>
-        <div><span>Destination:</span><span>Dinner Date 🌻</span></div>
-        <div><span>Departure:</span><span>6:00 PM This Saturday 02/14/2026</span></div>
-        <div><span>Dress Code:</span><span>Sexy</span></div>
-        <div><span>Gate opens in:</span><span id="gateCountdown"></span></div>
-      </div>
+  <div class="confirm-grid">
+    <div class="confirm-row"><span>Passengers:</span><span>Dia Nguyen + Jasmine Pok</span></div>
+    <div class="confirm-row"><span>Destination:</span><span>Dinner Date 🌻</span></div>
+    <div class="confirm-row"><span>Departure:</span><span>6:00 PM This Saturday 02/14/2026</span></div>
+    <div class="confirm-row"><span>Dress Code:</span><span>Sexy</span></div>
+    <div class="confirm-row"><span>Gate opens in:</span><span id="gateCountdown"></span></div>
+  </div>
 
-      <div class="signature">
-        — Jasmine Pok
-      </div>
+  <div class="signature">
+    — Jasmine Pok
+  </div>
 
-    </div>
+</div>
+
 
   </div>
 </div>
